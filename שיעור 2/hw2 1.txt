@@ -1,0 +1,63 @@
+
+------React - HomeWork 02-------
+[Question 01:]
+1) Create a component name it StudentComp
+   StudentComp will get 3 keyvalue props
+   - studentName
+   - studentId 
+   - studentGrade
+the component will display a single line represnting a student info as followed:
+45334234 - Shalom Hanoch - 70
+
+
+- if grade is between 0-56  the color of the row will be red 
+   and you should append  - (poor)  dynamiclly to the studnt line
+
+- if grade is between 57-75 the color of the row will be yellow
+and you should append  - (ok) dynamiclly to the studnt line
+
+-if grade is between 76-85 the color of the row will be Orange
+and you should append  - (Good) dynamiclly to the studnt line
+
+-if grade is between 86-100 the color of the row will be Green
+and you should append  - (Exellent) dynamiclly to the studnt line
+
+2) Create a component name it StudentsListComp
+    it will return list of StudentComp tags with  all props keys/values
+
+2)Create a component name it StudentsComp 
+that render 5 studentComp with apropriate props info 
+that  result  list of  Students lines:
+
+example:
+ 45334234 - Mosh Levi     - 58
+ 45334234 - Shalom Hanoch - 70
+ ...
+ ...
+ ...
+------------------------------------------------------------------------------------------------------------
+[Question 02:]
+
+1) Create a method that return JSON ARRAY OF YouubeVideo Objects
+    name this function GetYoutubeList()
+2) YouubeVideo json object will have the following attributes:
+ - title
+ - youtubeurl
+ - width
+ - hight
+3) Create 2 Components
+  1. YoutubeVideoListComp
+  2. YoutubeVideoComp
+    - YoutubeVideoListComp will get a single props key/value that contains an array of YouubeVideo Objects
+    - for each data object create(map) a YoutubeVideoComp that recieve a props
+      of YouubeVideo object as parameter
+    - each YoutubeVideoComp will display
+       a title of the video,a frame of the video itself with the correct size   
+    - Example embedded youtube:
+      in order to display this youtube address 
+        https://www.youtube.com/watch?v=_shA5Xwe8_4
+      you should use this iframe tag:
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/_shA5Xwe8_4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+4) Call GetYoutubeList() and fill the props data of the YoutubeVideoListComp with array of YouubeVideo Objects
+    from ReactDOM.createRoot in index.js
