@@ -1,41 +1,44 @@
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 
  class UrlList extends React.Component
 {
     
     constructor(props){
         super(props)
-        this.state = {urls: urlLinksList()};
+        this.state = {urls: urlLinksList(),valuechange:""};
+        this.handleChange = this.handleChange.bind(this)
+        this.AddUrlClick = this.AddUrlClick.bind(this)
+        
     }
 
     AddUrlClick() {
-        let nurl= this.state.value
-        let tempstate = [...this.state.urls,nurl]
+        let tempstate = [...this.state.urls,this.state.valuechange]
         console.log(tempstate)
         this.setState({urls: tempstate})
     };
 
 
-    // handleChange(e){
-    //     let x = this.state.value
-    //     this.setState({valuef : x})
-    //   }
+     handleChange(e){
+        let x = e.target.value
+        this.setState({valuechange : x})
+       }
     
     render() {
         return(
             <div>
                 <h2>Url list</h2>
-                 {/* <input type="text" value={this.state.value} placeholder="Enter url" onChange={this.handleChange}/>  */}
-                 {/* <button onClick={this.AddUrlClick}>add new url</button>  */}
-            
+                <input type="text" value = {this.Urlvalue} placeholder="Enter url" onChange={this.handleChange}/>
+                <button onClick={this.AddUrlClick}>add new url</button> 
+            <div>               
             <ul>
-                {this.state.urls.map(urls => {
-                    return <li>{urls}</li>;
+                {this.state.urls.map(urls1 => {
+                    return <li key={urls1}>{urls1}</li>;
                 })}
             </ul>  
                 
                 {/* <button onClick={this.clearAll}>Erase everything</button> */}
+                </div>
             </div>);
             };
     
