@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React from "react";
 
  class UrlList extends React.Component
 {
@@ -7,33 +7,61 @@ import React, {useState} from "react";
     constructor(props){
         super(props)
         this.state = {urls: urlLinksList(),valuechange:""};
-        this.handleChange = this.handleChange.bind(this)
+        this.handleInputUrlBoxChange = this.handleInputUrlBoxChange.bind(this)
         this.AddUrlClick = this.AddUrlClick.bind(this)
-        
+        this.SortUrlList = this.SortUrlList.bind(this)
+        this.RemoveUrlClick =this.RemoveUrlClick.bind(this)
     }
 
     AddUrlClick() {
         let tempstate = [...this.state.urls,this.state.valuechange]
-        console.log(tempstate)
-        this.setState({urls: tempstate})
+        if (this.state.valuechange === ""){
+            return(
+                alert("please Enter a Url")
+            );
+        }
+        else{
+            this.setState({urls: tempstate})
+        }
     };
 
 
-     handleChange(e){
+    handleInputUrlBoxChange(e){
         let x = e.target.value
         this.setState({valuechange : x})
-       }
+    }
+    
+    SortUrlList()
+    {
+            let tempsortlist =this.state.urls.sort((a,b) => {
+                return a.urls > b.urls ? 1: -1
+            })
+            this.setState({urls : tempsortlist})
+    }
+        
+    RemoveUrlClick(u){
+       let tempurllist = this.state.urls.filter(tempUrl => tempUrl !== u)
+       console.log(tempurllist)
+       this.setState({urls : tempurllist})
+    }
+
+
     
     render() {
         return(
             <div>
                 <h2>Url list</h2>
-                <input type="text" value = {this.Urlvalue} placeholder="Enter url" onChange={this.handleChange}/>
+                <input type="text" value = {this.Urlvalue} placeholder="Enter url" onChange={this.handleInputUrlBoxChange}/>
                 <button onClick={this.AddUrlClick}>add new url</button> 
+                <button onClick={this.SortUrlList}>Sort url</button> 
             <div>               
             <ul>
                 {this.state.urls.map(urls1 => {
-                    return <li key={urls1}>{urls1}</li>;
+                    return (<li key={urls1}>{urls1} <span></span> 
+                    <button>Remove Url</button> 
+                    <button>Edit Url</button> 
+                    </li>
+                    )
                 })}
             </ul>  
                 
