@@ -40,7 +40,7 @@ import React from "react";
     }
         
     RemoveUrlClick(u){
-       let tempurllist = this.state.urls.filter(tempUrl => tempUrl !== u)
+       let tempurllist = this.state.urls.filter((tempUrl) => tempUrl !== u.target.value)
        console.log(tempurllist)
        this.setState({urls : tempurllist})
     }
@@ -56,9 +56,9 @@ import React from "react";
                 <button onClick={this.SortUrlList}>Sort url</button> 
             <div>               
             <ul>
-                {this.state.urls.map(urls1 => {
+                {this.state.urls.map((urls1,b) => {
                     return (<li key={urls1}>{urls1} <span></span> 
-                    <button>Remove Url</button> 
+                    <button value={urls1} onClick={this.RemoveUrlClick}>Remove Url</button> 
                     <button>Edit Url</button> 
                     </li>
                     )
