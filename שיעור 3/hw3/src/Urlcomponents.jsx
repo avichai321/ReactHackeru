@@ -6,11 +6,12 @@ import React from "react";
     
     constructor(props){
         super(props)
-        this.state = {urls: urlLinksList(),valuechange:""};
+        this.state = {urls: urlLinksList(),valuechange:"", EditClicked:true};
         this.handleInputUrlBoxChange = this.handleInputUrlBoxChange.bind(this)
         this.AddUrlClick = this.AddUrlClick.bind(this)
         this.SortUrlList = this.SortUrlList.bind(this)
         this.RemoveUrlClick =this.RemoveUrlClick.bind(this)
+        this.EditUrlClick = this.EditUrlClick.bind(this)
     }
 
     AddUrlClick() {
@@ -41,10 +42,13 @@ import React from "react";
         
     RemoveUrlClick(u){
        let tempurllist = this.state.urls.filter((tempUrl) => tempUrl !== u.target.value)
-       console.log(tempurllist)
        this.setState({urls : tempurllist})
     }
-
+    
+    EditUrlClick(u){
+            let x = u.target.value
+            this.setState({EditClicked :x } )
+    }
 
     
     render() {
@@ -56,11 +60,15 @@ import React from "react";
                 <button onClick={this.SortUrlList}>Sort url</button> 
             <div>               
             <ul>
-                {this.state.urls.map((urls1,b) => {
+                {this.state.urls.map((urls1) => {
                     return (<li key={urls1}>{urls1} <span></span> 
                     <button value={urls1} onClick={this.RemoveUrlClick}>Remove Url</button> 
-                    <button>Edit Url</button> 
+                    <button value = {urls1} onClick={this.EditUrlClick}>Edit Url</button>
+                        <div>
+                       
+                        </div>
                     </li>
+                    
                     )
                 })}
             </ul>  
