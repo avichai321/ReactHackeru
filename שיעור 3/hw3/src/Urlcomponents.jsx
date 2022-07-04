@@ -6,7 +6,7 @@ import React from "react";
     
     constructor(props){
         super(props)
-        this.state = {urls: urlLinksList(),valuechange:"", EditClicked:true};
+        this.state = {urls: urlLinksList(),valuechange:"", EditClicked:false};
         this.handleInputUrlBoxChange = this.handleInputUrlBoxChange.bind(this)
         this.AddUrlClick = this.AddUrlClick.bind(this)
         this.SortUrlList = this.SortUrlList.bind(this)
@@ -47,6 +47,12 @@ import React from "react";
     
     EditUrlClick(u){
             let x = u.target.value
+            return(
+                <span>
+                    <input type="text" placeholder="enter new url" />
+                    <button>ok</button>
+                </span>
+            )
             this.setState({EditClicked :x } )
     }
 
@@ -63,12 +69,9 @@ import React from "react";
                 {this.state.urls.map((urls1) => {
                     return (<li key={urls1}>{urls1} <span></span> 
                     <button value={urls1} onClick={this.RemoveUrlClick}>Remove Url</button> 
-                    <button value = {urls1} onClick={this.EditUrlClick}>Edit Url</button>
-                        <div>
-                       
-                        </div>
+                    <button value = {urls1} onClick={()=> this.setState({EditClicked: true})}>Edit Url</button>
+                    <span></span>
                     </li>
-                    
                     )
                 })}
             </ul>  
