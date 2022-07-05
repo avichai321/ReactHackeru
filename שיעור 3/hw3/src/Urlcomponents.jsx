@@ -111,7 +111,6 @@ import validator from "validator";
             </div>);
             };
     
-
     
 }
 export default UrlList
