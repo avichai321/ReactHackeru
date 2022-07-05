@@ -6,12 +6,13 @@ import React from "react";
     
     constructor(props){
         super(props)
-        this.state = {urls: urlLinksList(),valuechange:"", EditClicked:false};
+        this.state = {urls: urlLinksList(),valuechange:"", EditClicked : []};
         this.handleInputUrlBoxChange = this.handleInputUrlBoxChange.bind(this)
         this.AddUrlClick = this.AddUrlClick.bind(this)
         this.SortUrlList = this.SortUrlList.bind(this)
         this.RemoveUrlClick =this.RemoveUrlClick.bind(this)
         this.EditUrlClick = this.EditUrlClick.bind(this)
+   
     }
 
     AddUrlClick() {
@@ -23,6 +24,7 @@ import React from "react";
         }
         else{
             this.setState({urls: tempstate})
+            this.state.valuechange = ""
         }
     };
 
@@ -46,16 +48,11 @@ import React from "react";
     }
     
     EditUrlClick(u){
-            let x = u.target.value
-            return(
-                <span>
-                    <input type="text" placeholder="enter new url" />
-                    <button>ok</button>
-                </span>
-            )
-            this.setState({EditClicked :x } )
+            let i = u.target.name
+            this.setState({EditClicked : [...this.state.EditClicked,  i]})
     }
-
+ 
+   
     
     render() {
         return(
@@ -66,11 +63,14 @@ import React from "react";
                 <button onClick={this.SortUrlList}>Sort url</button> 
             <div>               
             <ul>
-                {this.state.urls.map((urls1) => {
-                    return (<li key={urls1}>{urls1} <span></span> 
+                {this.state.urls.map((urls1,i) => {
+                    return (<li key={urls1}>{urls1} {i} <span></span> 
                     <button value={urls1} onClick={this.RemoveUrlClick}>Remove Url</button> 
-                    <button value = {urls1} onClick={()=> this.setState({EditClicked: true})}>Edit Url</button>
-                    <span></span>
+                    {this.state.EditClicked.includes(urls1) === false && <button name = {urls1} value = {i} onClick={this.EditUrlClick}>Edit Url</button>}
+                    <div>
+                        {this.state.EditClicked.includes(urls1) === true && <input value={this.state.valuechange} onChange={this.handleInputUrlBoxChange} type="text" placeholder="Enter New Url"></input> }
+                        {this.state.EditClicked.includes(urls1) === true && <button value = {"urls1"} >Ok</button> }
+                    </div>
                     </li>
                     )
                 })}
