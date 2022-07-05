@@ -1,5 +1,6 @@
 
 import React from "react";
+import validator from "validator";
 
  class UrlList extends React.Component
 {
@@ -12,7 +13,8 @@ import React from "react";
         this.SortUrlList = this.SortUrlList.bind(this)
         this.RemoveUrlClick =this.RemoveUrlClick.bind(this)
         this.EditUrlClick = this.EditUrlClick.bind(this)
-   
+        this.FinishUpdate= this.FinishUpdate.bind(this)
+     
     }
 
     AddUrlClick() {
@@ -23,8 +25,20 @@ import React from "react";
             );
         }
         else{
-            this.setState({urls: tempstate})
-            this.state.valuechange = ""
+            if (validator.isURL(this.state.valuechange))
+                {
+                    if (this.state.urls.includes(this.state.valuechange)){
+                        alert("this url is already exist please enter other")
+                    }
+                    else{
+                        this.setState({urls: tempstate , valuechange : "" , newaddUrl : ""})
+                    }   
+                }
+            else
+                {
+                        alert("Please Enter Valid Address")
+                }
+               
         }
     };
 
@@ -51,32 +65,48 @@ import React from "react";
             let i = u.target.name
             this.setState({EditClicked : [...this.state.EditClicked,  i]})
     }
+    
+    FinishUpdate(u){
+        if (validator.isURL(this.state.valuechange)){
+            let o = u.target.name
+            let oi = u.target.value
+            let newlist = this.state.urls.filter((tempUrl) => tempUrl !== o)
+            newlist.splice(oi ,0 , this.state.valuechange)
+            let neweditlist= this.state.EditClicked.filter(((tempUrl) => tempUrl !== o))
+            console.log(neweditlist)
+            this.setState({urls: newlist , valuechange : "" , EditClicked : neweditlist})
+            console.log(this.state.EditClicked)
+        }
+        else{
+            return (
+                alert("Please Enter Valid Address")
+            );
+        }
  
+    }
    
     
     render() {
         return(
             <div>
                 <h2>Url list</h2>
-                <input type="text" value = {this.Urlvalue} placeholder="Enter url" onChange={this.handleInputUrlBoxChange}/>
+                <input type="text" value = {this.AddUrlvalue} placeholder="Enter url" onChange={this.handleInputUrlBoxChange}/>
                 <button onClick={this.AddUrlClick}>add new url</button> 
                 <button onClick={this.SortUrlList}>Sort url</button> 
             <div>               
             <ul>
                 {this.state.urls.map((urls1,i) => {
-                    return (<li key={urls1}>{urls1} {i} <span></span> 
+                    return (<li key={urls1}>{urls1} <span></span> 
                     <button value={urls1} onClick={this.RemoveUrlClick}>Remove Url</button> 
                     {this.state.EditClicked.includes(urls1) === false && <button name = {urls1} value = {i} onClick={this.EditUrlClick}>Edit Url</button>}
                     <div>
-                        {this.state.EditClicked.includes(urls1) === true && <input value={this.state.valuechange} onChange={this.handleInputUrlBoxChange} type="text" placeholder="Enter New Url"></input> }
-                        {this.state.EditClicked.includes(urls1) === true && <button value = {"urls1"} >Ok</button> }
+                        {this.state.EditClicked.includes(urls1) === true && <input value={this.NewUrl} onChange={this.handleInputUrlBoxChange} type="text" placeholder="Enter New Url"></input> }
+                        {this.state.EditClicked.includes(urls1) === true && <button name= {urls1}  value = {i} onClick={this.FinishUpdate} >Ok</button> }
                     </div>
                     </li>
                     )
                 })}
             </ul>  
-                
-                {/* <button onClick={this.clearAll}>Erase everything</button> */}
                 </div>
             </div>);
             };
@@ -95,54 +125,6 @@ function urlLinksList(){
     ]
     )
 }
-
-//  function ShowAndAddTolist()
-// {
-   
-//     const [UrlLinkList, SetUrlLinkList] = useState([ {url : 'https://www.youtube.com/watch?v=ON8xpczPZAU'},
-//     {url :'https://www.youtube.com/watch?v=V3r-YGGsKpk'},
-//     {url :'https://www.youtube.com/watch?v=yCX7y6M9RUg'},
-//     {url :'https://www.youtube.com/watch?v=yOykfhhXDXM&t=2261s'}]);
-                                
-
-//         const AddUrlClick = () => {
-//             SetUrlLinkList([...UrlLinkList, {url: ""}]);
-//           };
-//         const changeInputclick = (e, index) => {
-//             const { name , value} = e.target;
-//             const listurl = [...UrlLinkList];
-//             listurl[index][name] = value;
-//             SetUrlLinkList(listurl);
-//         };
-//         const RemoveUrlClick = index => {
-//             const listurl = [...UrlLinkList];
-//             listurl.splice(index, 1);
-//             SetUrlLinkList(listurl);
-//           };
-//             return (
-//             <div >
-
-//                 {UrlLinkList.map((x,i) => {
-//                 return (
-//                     <div>
-                        
-//                     <input name="url" value={x.url} placeholder="Enter url" onChange={e => changeInputclick(e,i)}/>
-//                     <div>
-//                         {UrlLinkList.length !== 1 && <button onClick={RemoveUrlClick}>Remove</button>}
-//                         {UrlLinkList.length - 1 === i && <button onClick={AddUrlClick} >Add</button>}
-//                     </div>
-//                     </div>
-//                 );
-//                 })}
-//             </div>
-
-        
-
-
-//       );
-    
-     
-// };
 
 
   
